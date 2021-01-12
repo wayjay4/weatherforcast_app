@@ -17,12 +17,10 @@ Develop a simple weather application with 2 components.
 1. You must utilize a front end framework like angular or react
 2. Instructions must be included to run this codebase locally
 4. Include comments in your code
-5. Create a fork of this repo and send the url of the fork once finished to jg@signingdaysports.com and andrew@signingdaysports.com
+5. Create a new branch off the master to begin your work. Once you feel you have completed the challenge to the best of your abilities, please create a PR of your branch. The PR will signify you have completed. 
 
 ### Getting Started
-The provided machine has all required libraries, if anything else is required via apt-get or npm install, please make a comment of what else 
-was utilized. We have provided a generic React service as a starting point, run ```npm start``` from the ```weather-api``` directory to start this 
-service. 
+The provided machine has the generic required libraries you might need, however feel free to install anything extra! Please make a note of everything installed and include it in a list below or in an additional file. 
 
 ### Suggestions
 1. While design is not critical, having the interface be accessible is crucial
