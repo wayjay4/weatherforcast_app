@@ -4040,20 +4040,61 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
 
 
+
 function Weatherforcast() {
   //state vars
-  var _useState = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)({}),
+  var _useState = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(location.origin + '/api/'),
       _useState2 = _slicedToArray(_useState, 2),
-      appState = _useState2[0],
-      setAppState = _useState2[1]; // use effect
+      apiUrl = _useState2[0],
+      setApiUrl = _useState2[1];
+
+  var _useState3 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)({}),
+      _useState4 = _slicedToArray(_useState3, 2),
+      temperatureList = _useState4[0],
+      setTemperatureList = _useState4[1];
+
+  var _useState5 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false),
+      _useState6 = _slicedToArray(_useState5, 2),
+      recievedlist = _useState6[0],
+      setRecievedlist = _useState6[1]; // use effect
 
 
   (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(function () {
-    window.onload = function () {};
+    getTemperatureData();
   }, []);
+
+  var getTemperatureData = function getTemperatureData() {
+    // create api connection and send request
+    fetch(apiUrl + 'weatherforcast', {
+      'method': 'GET',
+      'headers': {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json',
+        'Referer': location.origin
+      }
+    }).then(function (response) {
+      return response.json();
+    }).then(function (response) {
+      setTemperatureList(response);
+      setRecievedlist(true);
+      console.log(response);
+    })["catch"](function (err) {
+      console.log(err);
+      setRecievedlist(true);
+    });
+  };
+
   return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("div", {
     className: "container",
-    children: "Hello world! from Weatherforcast..."
+    children: !recievedlist ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("div", {
+      children: "There is nothing to display."
+    }) : /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("div", {
+      children: temperatureList.map(function (temperature) {
+        return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("p", {
+          children: ["Date: ", temperature.date, /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("br", {}), "Temperature: ", temperature.temperature]
+        }, temperature.id);
+      })
+    })
   });
 }
 
