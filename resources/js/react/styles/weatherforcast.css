@@ -4,11 +4,11 @@
 }
 
 :root {
-	--siteColor-darkgrey:  #2b2d3c;
+	--siteColor-lightgrey:  #ededed;
 }
 
 html {
-	background-color: var(--siteColor-darkgrey, gray);
+	background-color: var(--siteColor-lightgrey, white);
 }
 
 body {
@@ -19,4 +19,14 @@ body {
 	-moz-background-size: cover;
 	-o-background-size: cover;
 	background-size: cover;
+}
+
+
+.action-btns .btn {
+	margin-right: 25px;
+	margin-bottom: 50px;
+}
+
+.weatherData-container {
+	margin-bottom: 20px;
 }
