@@ -4010,6 +4010,38 @@ if (document.getElementById("weatherforcast_app")) {
 
 /***/ }),
 
+/***/ "./resources/js/react/components/WeatherData.js":
+/*!******************************************************!*\
+  !*** ./resources/js/react/components/WeatherData.js ***!
+  \******************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
+
+
+
+
+var WeatherData = function WeatherData(props) {
+  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsxs)("div", {
+    className: "container weatherData-container",
+    children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("strong", {
+      children: "Date:"
+    }), " ", props.temperatureData.date, /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("br", {}), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("strong", {
+      children: "Temperature:"
+    }), " ", props.temperatureData.temperature, " \u2109"]
+  });
+};
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (WeatherData);
+
+/***/ }),
+
 /***/ "./resources/js/react/components/Weatherforcast.js":
 /*!*********************************************************!*\
   !*** ./resources/js/react/components/Weatherforcast.js ***!
@@ -4023,7 +4055,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react_dom__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-dom */ "./node_modules/react-dom/index.js");
-/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
+/* harmony import */ var _WeatherData__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./WeatherData */ "./resources/js/react/components/WeatherData.js");
+/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
 function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
 
 function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
@@ -4041,6 +4074,7 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
 
 
+
 function Weatherforcast() {
   //state vars
   var _useState = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(location.origin + '/api/'),
@@ -4050,20 +4084,27 @@ function Weatherforcast() {
 
   var _useState3 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)({}),
       _useState4 = _slicedToArray(_useState3, 2),
-      temperatureList = _useState4[0],
-      setTemperatureList = _useState4[1];
+      mainList = _useState4[0],
+      setMainList = _useState4[1];
 
-  var _useState5 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false),
+  var _useState5 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)({}),
       _useState6 = _slicedToArray(_useState5, 2),
-      recievedlist = _useState6[0],
-      setRecievedlist = _useState6[1]; // use effect
+      temperatureList = _useState6[0],
+      setTemperatureList = _useState6[1];
 
+  var _useState7 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false),
+      _useState8 = _slicedToArray(_useState7, 2),
+      recievedlist = _useState8[0],
+      setRecievedlist = _useState8[1];
+
+  var sevendays = 7;
+  var fourteendays = 14; // use effect
 
   (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(function () {
-    getTemperatureData();
+    getTemperatureData(sevendays);
   }, []);
 
-  var getTemperatureData = function getTemperatureData() {
+  var getTemperatureData = function getTemperatureData(numDays) {
     // create api connection and send request
     fetch(apiUrl + 'weatherforcast', {
       'method': 'GET',
@@ -4075,25 +4116,58 @@ function Weatherforcast() {
     }).then(function (response) {
       return response.json();
     }).then(function (response) {
-      setTemperatureList(response);
+      setMainList(response);
+      setTemperatureList(makeList(response, numDays));
       setRecievedlist(true);
-      console.log(response);
     })["catch"](function (err) {
       console.log(err);
       setRecievedlist(true);
     });
+  }; // make list with only max numDays
+
+
+  var makeList = function makeList(array, numDays) {
+    var tempArray = [];
+    var i = 0;
+
+    while (i < numDays) {
+      tempArray[i] = array[i];
+      i++;
+    }
+
+    return tempArray;
   };
 
-  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("div", {
+  var handleBtnClick = function handleBtnClick(el) {
+    var numDays = $(el.target).attr("data-days");
+    getTemperatureData(numDays);
+  };
+
+  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("div", {
     className: "container",
-    children: !recievedlist ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("div", {
+    children: !recievedlist ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("div", {
       children: "There is nothing to display."
-    }) : /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("div", {
-      children: temperatureList.map(function (temperature) {
-        return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("p", {
-          children: ["Date: ", temperature.date, /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("br", {}), "Temperature: ", temperature.temperature]
-        }, temperature.id);
-      })
+    }) : /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("div", {
+      children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("div", {
+        className: "action-btns",
+        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("button", {
+          type: "button",
+          className: "btn btn-primary",
+          onClick: handleBtnClick,
+          "data-days": sevendays,
+          children: "Show 7-Day Forcast"
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("button", {
+          type: "button",
+          className: "btn btn-secondary",
+          onClick: handleBtnClick,
+          "data-days": fourteendays,
+          children: "Show 14-Day Forcast"
+        })]
+      }), temperatureList.map(function (temperatureData) {
+        return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)(_WeatherData__WEBPACK_IMPORTED_MODULE_2__.default, {
+          temperatureData: temperatureData
+        }, temperatureData.id);
+      })]
     })
   });
 }
@@ -8560,7 +8634,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "\r\n* {\r\n\tbox-sizing:  border-box;\r\n}\r\n\r\n:root {\r\n\t--siteColor-darkgrey:  #2b2d3c;\r\n}\r\n\r\nhtml {\r\n\tbackground-color: var(--siteColor-darkgrey, gray);\r\n}\r\n\r\nbody {\r\n\tline-height: 1.5;\r\n\tfont-family: \"Poppins\", sans-serif;\r\n\tmin-height: 100vh;\r\n\tbackground-size: cover;\r\n}", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "\r\n* {\r\n\tbox-sizing:  border-box;\r\n}\r\n\r\n:root {\r\n\t--siteColor-lightgrey:  #ededed;\r\n}\r\n\r\nhtml {\r\n\tbackground-color: var(--siteColor-lightgrey, white);\r\n}\r\n\r\nbody {\r\n\tline-height: 1.5;\r\n\tfont-family: \"Poppins\", sans-serif;\r\n\tmin-height: 100vh;\r\n\tbackground-size: cover;\r\n}\r\n\r\n\r\n.action-btns .btn {\r\n\tmargin-right: 25px;\r\n\tmargin-bottom: 50px;\r\n}\r\n\r\n.weatherData-container {\r\n\tmargin-bottom: 20px;\r\n}\r\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
