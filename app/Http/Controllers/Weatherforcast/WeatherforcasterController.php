@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers\Weatherforcast;
 
-use App\Http\Controllers\Controller;
+use App\Http\Controllers\ApiController;
 use Illuminate\Http\Request;
 
-class WeatherforcasterController extends Controller
+class WeatherforcasterController extends ApiController
 {
     /**
      * Display a listing of the resource.
